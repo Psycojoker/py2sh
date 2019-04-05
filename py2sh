@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+import sys
+import inspect
+import importlib.util
+from os import path
+
+import argh
+
+
+def load_source(file_path):
+    module_name = path.splitext(path.split(file_path)[1])[0]
+    spec = importlib.util.spec_from_file_location(module_name, file_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+if __name__ == '__main__':
+    if not sys.argv[1:]:
+        print("Usage: py2sh {file} ...")
+        sys.exit(0)
+
+    module = load_source(sys.argv[1])
+
+    functions = list(filter(inspect.isfunction, map(lambda x: getattr(module, x), dir(module))))
+
+    del sys.argv[1]
+
+    parser = argh.ArghParser()
+    parser.add_commands(functions)
+    parser.dispatch()
