@@ -1,5 +1,5 @@
-This is a dirty POC that allows you to call every function of a python file
-directly from the shell.
+This is a POC that allows you to call every function of a python file directly
+from the shell.
 
 It's a bit like a python-shell bridge.
 
@@ -36,5 +36,5 @@ Installation (python3)
 It's written for python3 for now.
 
 ```
-pip install git+https://github.com/psycojoker/py2sh
+pip install --user git+https://github.com/psycojoker/py2sh
 ```
